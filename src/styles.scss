@@ -33,3 +33,16 @@ body {
   height: 100vh;
 }
 /* You can add global styles to this file, and also import other style files */
+
+.btn {
+  margin: 7px;
+  padding: 10px;
+  color: white;
+  background-color: rgb(22, 42, 221);
+  border-radius: 8px;
+}
+
+.btn:hover {
+  background-color: rgb(116, 147, 235);
+  color: white;
+}
