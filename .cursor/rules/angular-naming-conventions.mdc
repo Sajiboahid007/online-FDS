@@ -1,0 +1,65 @@
+---
+description: Angular file naming conventions and best practices
+alwaysApply: true
+---
+
+# Angular Naming Conventions
+
+Follow these strict naming conventions for all Angular files:
+
+## Components
+- TypeScript: `*.component.ts`
+- Template: `*.component.html`
+- Styles: `*.component.scss` (or `.css`)
+- Spec: `*.component.spec.ts`
+
+Example:
+```
+login.component.ts
+login.component.html
+login.component.scss
+login.component.spec.ts
+```
+
+## Modules
+- Module: `*.module.ts`
+- Routing Module: `*-routing.module.ts`
+
+Example:
+```
+admin.module.ts
+admin-routing.module.ts
+```
+
+## Services
+- Service: `*.service.ts`
+- Spec: `*.service.spec.ts`
+
+Example:
+```
+auth.service.ts
+auth.service.spec.ts
+```
+
+## Other Angular Files
+- Directives: `*.directive.ts`
+- Pipes: `*.pipe.ts`
+- Guards: `*.guard.ts`
+- Interceptors: `*.interceptor.ts`
+- Resolvers: `*.resolver.ts`
+- Validators: `*.validator.ts`
+- Models/Interfaces: `*.model.ts` or `*.interface.ts`
+
+## File Naming Rules
+1. Use kebab-case for all file names (lowercase with hyphens)
+2. Always include the file type suffix (component, service, module, etc.)
+3. Keep names descriptive but concise
+4. Group related files in the same directory
+
+## Class Naming
+- Components: PascalCase ending in `Component` (e.g., `LoginComponent`)
+- Services: PascalCase ending in `Service` (e.g., `AuthService`)
+- Modules: PascalCase ending in `Module` (e.g., `AdminModule`)
+- Directives: PascalCase ending in `Directive`
+- Pipes: PascalCase ending in `Pipe`
+- Guards: PascalCase ending in `Guard`
