@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:online-FDS": "node dist/online-FDS/server/server.mjs"
+    "serve:ssr:online-FDS": "node dist/online-FDS/server/server.mjs",
+    "fix-naming": "node scripts/enforce-naming.js"
   },
   "prettier": {
     "printWidth": 100,
