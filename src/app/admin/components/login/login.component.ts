@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
 import { FDSConstant } from '../../../fds-config/constant/fds-constant';
 import { LocalStorageService } from '../../../shared/service/local-storage.service';
 import { LoginService } from '../../../shared/service/login-service';
@@ -12,33 +14,49 @@ import { LoginService } from '../../../shared/service/login-service';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  loginInProgress = false;
 
   constructor(
     private readonly loginService: LoginService,
     private readonly localStorageService: LocalStorageService,
+    private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
   ngOnInit(): void {
     this.loginForm = this.loginService.getLoginForm();
   }
 
-  public onLogin() {
+  public onLogin(): void {
     if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      this.cdr.detectChanges();
       return;
     }
 
+    this.loginInProgress = true;
+    this.cdr.detectChanges();
+
     const data = this.loginForm.getRawValue();
+    this.loginService
+      .login(data)
+      .pipe(
+        finalize(() => {
+          this.loginInProgress = false;
+          this.cdr.detectChanges();
+        }),
+      )
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          this.localStorageService.setItem(FDSConstant.JwtTokenKey, res?.token);
+          this.localStorageService.setItem(FDSConstant.RefreshTokenKey, res?.refreshToken);
 
-    this.loginService.login(data).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.localStorageService.setItem(FDSConstant.JwtTokenKey, res?.token);
-        this.localStorageService.setItem(FDSConstant.RefreshTokenKey, res?.refreshToken);
-
-        console.debug('token', this.localStorageService.getItem(FDSConstant.JwtTokenKey));
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+          console.debug('token', this.localStorageService.getItem(FDSConstant.JwtTokenKey));
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
   }
 }

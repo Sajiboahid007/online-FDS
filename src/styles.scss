@@ -34,7 +34,8 @@ body {
 }
 /* You can add global styles to this file, and also import other style files */
 
-.btn {
+/* Custom button (renamed so Bootstrap .btn is not overridden) */
+.btn-app {
   margin: 7px;
   padding: 10px;
   color: white;
@@ -42,7 +43,7 @@ body {
   border-radius: 8px;
 }
 
-.btn:hover {
+.btn-app:hover {
   background-color: rgb(116, 147, 235);
   color: white;
 }
