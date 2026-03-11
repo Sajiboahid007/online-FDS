@@ -47,12 +47,9 @@ export class LoginComponent implements OnInit {
       )
       .subscribe({
         next: (res) => {
-          console.log(res);
           this.localStorageService.setItem(FDSConstant.JwtTokenKey, res?.token);
           this.localStorageService.setItem(FDSConstant.RefreshTokenKey, res?.refreshToken);
-
-          console.debug('token', this.localStorageService.getItem(FDSConstant.JwtTokenKey));
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['dashboard']);
         },
         error: (error) => {
           console.log(error);

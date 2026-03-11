@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { UserInfoService } from '../../../shared/user-info/user-info-service';
 
 @Component({
   selector: 'dashboard',
@@ -9,7 +10,17 @@ import { filter } from 'rxjs';
   styleUrl: './dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+  userName: string = '';
+  userRole: string = '';
+
+  ngOnInit(): void {
+    const userInfo = this.userInfoService.getUserInfo();
+    console.log('userInfo', userInfo);
+    this.userName = userInfo.name;
+    this.userRole = userInfo.role;
+  }
+
   isSidebarOpen = signal(true);
   isSidebarCollapsed = signal(false);
   currentRoute = signal('');
@@ -23,7 +34,10 @@ export class DashboardComponent {
     },
   ];
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private readonly userInfoService: UserInfoService,
+  ) {
     // Track current route for active state
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -31,6 +45,9 @@ export class DashboardComponent {
         this.currentRoute.set(event.url);
       });
     this.currentRoute.set(this.router.url);
+
+    // const userInfo = this.userInfoService.getUserInfo();
+    // console.log(userInfo);
   }
 
   toggleSidebar(): void {

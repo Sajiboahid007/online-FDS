@@ -6,10 +6,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { ShakilTestComponent } from './components/shakil-test/shakil-test.component';
 
 @NgModule({
-  declarations: [ShakilTestComponent],
+  declarations: [],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -20,7 +19,6 @@ import { ShakilTestComponent } from './components/shakil-test/shakil-test.compon
     MatIconModule,
   ],
   exports: [
-    ShakilTestComponent,
     ReactiveFormsModule,
     MatCardModule,
     MatFormFieldModule,
