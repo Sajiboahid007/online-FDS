@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DecodeService } from '../service/decode-service/decode-service';
+import { DecodeService } from './decode-service';
 
 @Injectable({
   providedIn: 'root',

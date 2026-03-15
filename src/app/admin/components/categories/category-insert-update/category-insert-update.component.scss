@@ -1,0 +1,23 @@
+/* Modal content layout only – no form-field overrides (keeps input fill intact) */
+.form-container {
+  min-width: 360px;
+}
+
+.form-header {
+  padding: 20px 24px 12px;
+
+  .form-title {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.87);
+  }
+}
+
+.form-content {
+  padding: 0 24px 24px;
+
+  .full-width {
+    width: 100%;
+  }
+}

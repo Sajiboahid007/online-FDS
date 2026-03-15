@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FDSConstant } from '../../../fds-config/constant/fds-constant';
-import { LocalStorageService } from '../local-storage.service';
+import { FDSConstant } from '../../fds-config/constant/fds-constant';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',

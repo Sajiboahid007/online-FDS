@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { UserInfoService } from '../../../shared/user-info/user-info-service';
+import { UserInfoService } from '../../services/user-info-service';
 
 @Component({
   selector: 'dashboard',
@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
   menuItems = [
     {
       label: 'Category List',
-      route: '/admin/components/dashboard',
+      route: '/dashboard/categories',
       icon: '🍔',
       description: 'Manage Categories',
     },

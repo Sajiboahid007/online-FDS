@@ -1,0 +1,16 @@
+<div class="form-container">
+    <div class="form-header">
+        <h4 class="form-title">
+                 {{ isEditMode ? 'Edit Category' : 'Add Category' }}
+        </h4>
+    </div>
+
+    <form [formGroup]="categoryform" class="form-content">
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Category Name</mat-label>
+            <input formControlName="Name" matInput type="text" placeholder="Enter category name" />
+            <!-- <mat-icon matPrefix>category</mat-icon> -->
+            <mat-error>Please enter a valid category name</mat-error>
+        </mat-form-field>
+    </form>
+</div>

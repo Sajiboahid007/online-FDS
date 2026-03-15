@@ -3,8 +3,8 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { FDSConstant } from '../../../fds-config/constant/fds-constant';
-import { LocalStorageService } from '../../../shared/service/local-storage.service';
-import { LoginService } from '../../../shared/service/login-service';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { LoginService } from '../../services/login-service';
 
 @Component({
   selector: 'app-login',
