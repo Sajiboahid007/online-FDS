@@ -6,11 +6,25 @@
     </div>
 
     <form [formGroup]="categoryform" class="form-content">
-        <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Category Name</mat-label>
-            <input formControlName="Name" matInput type="text" placeholder="Enter category name" />
-            <!-- <mat-icon matPrefix>category</mat-icon> -->
-            <mat-error>Please enter a valid category name</mat-error>
-        </mat-form-field>
+        <div class="field-group">
+            <p-floatlabel variant="on">
+                <input
+                    id="category-name"
+                    pInputText
+                    class="full-width"
+                    formControlName="Name"
+                    type="text"
+                    autocomplete="off"
+                />
+                <label for="category-name">Category Name</label>
+            </p-floatlabel>
+            <p-message
+                *ngIf="categoryform.get('Name')?.invalid && categoryform.get('Name')?.touched"
+                severity="error"
+                size="small"
+                variant="simple"
+                text="Please enter a valid category name"
+            ></p-message>
+        </div>
     </form>
 </div>

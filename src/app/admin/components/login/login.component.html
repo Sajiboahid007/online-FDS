@@ -1,38 +1,54 @@
 <div class="login-container" *ngIf="loginForm">
-  <mat-card class="login-card">
-    <mat-card-header>
-      <mat-card-title>Login</mat-card-title>
-      <mat-card-subtitle>Enter your credentials</mat-card-subtitle>
-    </mat-card-header>
-
-    <mat-card-content>
-      <div [formGroup]="loginForm" class="login-form">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Email</mat-label>
-          <input formControlName="Email" matInput type="email" placeholder="Enter your email" />
-          <mat-icon matPrefix>email</mat-icon>
-          <mat-error>Please enter a valid email</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Password</mat-label>
-          <input
-            formControlName="Password"
-            matInput
-            type="password"
-            placeholder="Enter your password"
-          />
-          <mat-icon matPrefix>lock</mat-icon>
-          <mat-error>Password is required</mat-error>
-        </mat-form-field>
+  <p-card class="login-card">
+    <ng-template pTemplate="header">
+      <div class="login-card-header">
+        <h2>Login</h2>
+        <p>Enter your credentials</p>
       </div>
-    </mat-card-content>
+    </ng-template>
 
-    <mat-card-actions align="end">
-      <button type="button" class="btn btn-danger">Cancel</button>
-      <button type="button" class="btn btn-primary" (click)="onLogin()" [disabled]="loginInProgress">
-        {{ loginInProgress ? 'Logging in...' : 'Login' }}
-      </button>
-    </mat-card-actions>
-  </mat-card>
+    <div [formGroup]="loginForm" class="login-form">
+      <div class="field-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          pInputText
+          class="full-width"
+          formControlName="Email"
+          type="email"
+          placeholder="Enter your email"
+        />
+        <small class="field-error" *ngIf="loginForm.get('Email')?.invalid && loginForm.get('Email')?.touched">
+          Please enter a valid email
+        </small>
+      </div>
+
+      <div class="field-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          pInputText
+          class="full-width"
+          formControlName="Password"
+          type="password"
+          placeholder="Enter your password"
+        />
+        <small
+          class="field-error"
+          *ngIf="loginForm.get('Password')?.invalid && loginForm.get('Password')?.touched"
+        >
+          Password is required
+        </small>
+      </div>
+    </div>
+
+    <div class="login-actions">
+      <p-button label="Cancel" severity="secondary" [outlined]="true"></p-button>
+      <p-button
+        [label]="loginInProgress ? 'Logging in...' : 'Login'"
+        [disabled]="loginInProgress"
+        (onClick)="onLogin()"
+      ></p-button>
+    </div>
+  </p-card>
 </div>
