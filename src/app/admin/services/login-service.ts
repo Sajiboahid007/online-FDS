@@ -25,6 +25,6 @@ export class LoginService {
   }
 
   login(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/login`, data);
+    return this.http.post(`${this.baseUrl}/login`, data);
   }
 }

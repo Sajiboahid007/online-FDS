@@ -41,8 +41,11 @@ export class LoginComponent implements OnInit {
       .login(data)
       .pipe(
         finalize(() => {
-          this.loginInProgress = false;
-          this.cdr.detectChanges();
+          // Defer to next tick to avoid ExpressionChangedAfterItHasBeenCheckedError
+          setTimeout(() => {
+            this.loginInProgress = false;
+            this.cdr.detectChanges();
+          }, 0);
         }),
       )
       .subscribe({

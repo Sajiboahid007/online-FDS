@@ -1,48 +1,51 @@
-<mat-card>
-  <mat-card-header class="card-header">
-    <div class="header-content">
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="card-header header-content">
       <div>
-        <mat-card-title>Categories List</mat-card-title>
-        <mat-card-subtitle>Total Categories {{ category.length }}</mat-card-subtitle>
+        <h2 class="p-card-title m-0">Categories List</h2>
+        <p class="p-card-subtitle text-color-secondary m-0">
+          Total Categories {{ category.length }}
+        </p>
       </div>
-      <button class="btn btn-primary" type="button" (click)="AddCategory()">
-        <mat-icon>add</mat-icon>
-        Add
-      </button>
+      <p-button icon="pi pi-plus" label="Add" (onClick)="AddCategory()"></p-button>
     </div>
-  </mat-card-header>
-
-  <mat-card-content>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
-      <ng-container matColumnDef="Name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let category">{{ category.name }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="Status">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
-        <td mat-cell *matCellDef="let category">{{ category.status ? 'Active' : 'Inactive' }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="Action">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let category">
-          <button mat-icon-button color="primary" type="button" aria-label="Edit">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" type="button" aria-label="Delete">
-            <mat-icon>delete</mat-icon>
-          </button>
+  </ng-template>
+  <p-table
+    [value]="category"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5, 10, 20, 50]"
+    styleClass="p-datatable-gridlines"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th style="width: 8rem">Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-category>
+      <tr>
+        <td>{{ category.name }}</td>
+        <td>{{ category.status ? 'Active' : 'Inactive' }}</td>
+        <td>
+          <p-button
+            icon="pi pi-pencil"
+            [rounded]="true"
+            [text]="true"
+            severity="secondary"
+            (onClick)="openEditCategory(category)"
+            ariaLabel="Edit"
+          ></p-button>
+          <p-button
+            icon="pi pi-trash"
+            [rounded]="true"
+            [text]="true"
+            severity="danger"
+            ariaLabel="Delete"
+          ></p-button>
         </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-    <mat-paginator
-      [pageSizeOptions]="[5, 10, 20, 50]"
-      [pageSize]="5"
-      showFirstLastButtons
-    ></mat-paginator>
-  </mat-card-content>
-</mat-card>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

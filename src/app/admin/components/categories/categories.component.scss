@@ -7,20 +7,10 @@
     flex-wrap: wrap;
     gap: 1rem;
   }
-
-  button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
 }
 
-mat-card-content {
+:host ::ng-deep .p-card-body {
   table {
     width: 100%;
-  }
-
-  mat-paginator {
-    background: transparent;
   }
 }

@@ -1,16 +1,45 @@
 <div class="form-container">
-    <div class="form-header">
-        <h4 class="form-title">
-                 {{ isEditMode ? 'Edit Category' : 'Add Category' }}
-        </h4>
+  <div class="form-header">
+    <h4 class="form-title">{{ isEditMode ? 'Edit Category' : 'Add Category' }}</h4>
+  </div>
+  <form [formGroup]="categoryform" class="form-content">
+    <div class="p-inputgroup">
+      <span class="p-float-label">
+        <input pInputText id="categoryName" formControlName="Name" class="full-width" />
+        <label for="categoryName">Category Name</label>
+      </span>
+      <small
+        class="p-error"
+        *ngIf="categoryform.get('Name')?.invalid && categoryform.get('Name')?.touched"
+      >
+        Please enter a valid category name (3-20 characters).
+      </small>
     </div>
-
-    <form [formGroup]="categoryform" class="form-content">
-        <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Category Name</mat-label>
-            <input formControlName="Name" matInput type="text" placeholder="Enter category name" />
-            <!-- <mat-icon matPrefix>category</mat-icon> -->
-            <mat-error>Please enter a valid category name</mat-error>
-        </mat-form-field>
-    </form>
+    <div class="field">
+      <label for="categoryStatus" class="block mb-1">Status</label>
+      <select
+        id="categoryStatus"
+        formControlName="Status"
+        class="w-full p-inputtext p-component"
+      >
+        <option [ngValue]="true">Active</option>
+        <option [ngValue]="false">Inactive</option>
+      </select>
+    </div>
+  </form>
+  <div class="flex justify-content-end gap-2 mt-3">
+    <p-button
+      label="Cancel"
+      severity="secondary"
+      [disabled]="isLoading"
+      (onClick)="onDiscard()"
+    ></p-button>
+    <p-button
+      [label]="isEditMode ? 'Update' : 'Save'"
+      severity="primary"
+      [loading]="isLoading"
+      [disabled]="isLoading"
+      (onClick)="onSave()"
+    ></p-button>
+  </div>
 </div>

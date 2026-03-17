@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 export interface ConfirmationDialogData {
   title?: string;
@@ -16,22 +16,26 @@ export interface ConfirmationDialogData {
   styleUrl: './comfirmation-dialog.component.scss',
 })
 export class ComfirmationDialogComponent {
+  data: ConfirmationDialogData;
+
   constructor(
-    public dialogRef: MatDialogRef<ComfirmationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ConfirmationDialogData
+    public ref: DynamicDialogRef,
+    public config: DynamicDialogConfig
   ) {
-    this.data.title = this.data.title ?? 'Confirm Delete';
-    this.data.message = this.data.message ?? 'Are you sure you want to delete this item?';
-    this.data.confirmText = this.data.confirmText ?? 'Delete';
-    this.data.cancelText = this.data.cancelText ?? 'Cancel';
-    this.data.confirmColor = this.data.confirmColor ?? 'warn';
+    this.data = {
+      title: config.data?.title ?? 'Confirm Delete',
+      message: config.data?.message ?? 'Are you sure you want to delete this item?',
+      confirmText: config.data?.confirmText ?? 'Delete',
+      cancelText: config.data?.cancelText ?? 'Cancel',
+      confirmColor: config.data?.confirmColor ?? 'warn',
+    };
   }
 
   onConfirm(): void {
-    this.dialogRef.close(true);
+    this.ref.close(true);
   }
 
   onCancel(): void {
-    this.dialogRef.close(false);
+    this.ref.close(false);
   }
 }
