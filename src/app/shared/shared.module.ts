@@ -13,6 +13,8 @@ import { CardModule } from 'primeng/card';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @NgModule({
   declarations: [],
@@ -31,6 +33,8 @@ import { MessageModule } from 'primeng/message';
     InputTextModule,
     MessageModule,
     ButtonModule,
+    SelectButtonModule,
+    ToggleSwitchModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -46,6 +50,8 @@ import { MessageModule } from 'primeng/message';
     InputTextModule,
     MessageModule,
     ButtonModule,
+    SelectButtonModule,
+    ToggleSwitchModule,
   ],
 })
 export class SharedModule {}

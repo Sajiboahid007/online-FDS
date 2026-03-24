@@ -16,9 +16,13 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     const userInfo = this.userInfoService.getUserInfo();
+    if (!userInfo) {
+      return;
+    }
+
     console.log('userInfo', userInfo);
-    this.userName = userInfo.name;
-    this.userRole = userInfo.role;
+    this.userName = userInfo?.name || '';
+    this.userRole = userInfo?.role || '';
   }
 
   isSidebarOpen = signal(true);

@@ -1,18 +1,17 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   OnInit,
-  AfterViewInit,
   ViewChild,
 } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { Category } from '../../../fds-config/entity-models/categories';
-import { CategoriesService } from '../../services/categories-service';
-import { AppQuery } from '../../../shared/app-query';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Subject, takeUntil } from 'rxjs';
+import { Category } from '../../../fds-config/entity-models/categories';
+import { AppQuery } from '../../../shared/app-query';
+import { CategoriesService } from '../../services/categories-service';
 import { CategoryInsertUpdateComponent } from './category-insert-update/category-insert-update.component';
 @Component({
   selector: 'categories',
@@ -32,8 +31,7 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
 
   constructor(
     private readonly categoriesService: CategoriesService,
-    private readonly cdr: ChangeDetectorRef,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -41,22 +39,56 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
   }
 
   getCategories(): void {
-    this.categoriesService.getCategories().pipe(takeUntil(this.destroy$)).subscribe({
-      next: (res: AppQuery<Category[]>) => {
-      this.category = res?.data ?? [];
-      this.dataSource.data = this.category;
-      this.cdr.markForCheck();
-    },
-    error: (error) => {
-      console.error('Error fetching categories:', error);
-    }
-  });
+    this.categoriesService
+      .getCategories()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res: AppQuery<Category[]>) => {
+          this.category = res?.data ?? [];
+          this.dataSource.data = this.category;
+        },
+        error: (error) => {
+          console.error('Error fetching categories:', error);
+        },
+      });
   }
 
   AddCategory(): void {
-    this.dialog.open(CategoryInsertUpdateComponent, {
+    const dialogRef = this.dialog.open(CategoryInsertUpdateComponent, {
       width: '500px',
       autoFocus: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getCategories();
+      }
+    });
+  }
+
+  onEditCategory(id: number): void {
+    alert('Edit Category');
+    console.log('Edit Category');
+
+    this.categoriesService.getCategoryById(id).subscribe({
+      next: (res: AppQuery<Category>) => {
+        const category = res?.data;
+
+        const dialogRef = this.dialog.open(CategoryInsertUpdateComponent, {
+          width: '500px',
+          autoFocus: true,
+          data: category,
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.getCategories();
+          }
+        });
+      },
+      error: (error: any) => {
+        console.error('Error fetching category:', error);
+      },
     });
   }
 

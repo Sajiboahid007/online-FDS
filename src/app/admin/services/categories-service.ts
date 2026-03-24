@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { FDSConstant } from '../../fds-config/constant/fds-constant';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { FDSConstant } from '../../fds-config/constant/fds-constant';
 import { Category } from '../../fds-config/entity-models/categories';
 import { AppQuery } from '../../shared/app-query';
 
@@ -14,6 +14,14 @@ export class CategoriesService {
   baseUrl = FDSConstant.BaseUrl;
 
   getCategories(): Observable<AppQuery<Category[]>> {
-    return this.http.get<AppQuery<Category[]>>(`${this.baseUrl}/categories/get`);
+    return this.http.get<AppQuery<Category[]>>(`${this.baseUrl}/api/categories/get`);
+  }
+
+  getCategoryById(id: number): Observable<AppQuery<Category>> {
+    return this.http.get<AppQuery<Category>>(`${this.baseUrl}/api/categories/get/${id}`);
+  }
+
+  addCategory(category: Category): Observable<AppQuery<Category>> {
+    return this.http.post<AppQuery<Category>>(`${this.baseUrl}/api/categories/create`, category);
   }
 }
