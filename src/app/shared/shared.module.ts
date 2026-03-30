@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { FlexLayoutModule } from 'ngx-flexible-layout';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -15,6 +16,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+
+import { DividerModule } from 'primeng/divider';
+
+const primeNgModules = [DividerModule];
 
 @NgModule({
   declarations: [],
@@ -35,6 +40,8 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
     ButtonModule,
     SelectButtonModule,
     ToggleSwitchModule,
+    FlexLayoutModule,
+    ...primeNgModules,
   ],
   exports: [
     ReactiveFormsModule,
@@ -52,6 +59,8 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
     ButtonModule,
     SelectButtonModule,
     ToggleSwitchModule,
+    FlexLayoutModule,
+    ...primeNgModules,
   ],
 })
 export class SharedModule {}

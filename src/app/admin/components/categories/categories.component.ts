@@ -57,6 +57,7 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(CategoryInsertUpdateComponent, {
       width: '500px',
       autoFocus: true,
+      data: null,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -67,9 +68,6 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
   }
 
   onEditCategory(id: number): void {
-    alert('Edit Category');
-    console.log('Edit Category');
-
     this.categoriesService.getCategoryById(id).subscribe({
       next: (res: AppQuery<Category>) => {
         const category = res?.data;

@@ -1,12 +1,6 @@
-<div class="form-container">
-  <div class="form-header">
-    <h4 class="form-title">
-      {{ isEditMode ? 'Add Category' : 'Edit Category' }}
-    </h4>
-  </div>
-
-  <form [formGroup]="categoryform" class="form-content">
-    <div class="field-group">
+<p-card header="{{ isEditMode ? 'Add Category' : 'Edit Category' }}">
+  <form [formGroup]="categoryForm">
+    <div>
       <p-floatlabel variant="on">
         <input
           id="category-name"
@@ -18,8 +12,9 @@
         />
         <label for="category-name">Category Name</label>
       </p-floatlabel>
+
       <p-message
-        *ngIf="categoryform.get('Name')?.invalid && categoryform.get('Name')?.touched"
+        *ngIf="categoryForm.get('Name')?.invalid"
         severity="error"
         size="small"
         variant="simple"
@@ -27,36 +22,33 @@
       ></p-message>
     </div>
 
-    <div class="field-group">
-      <label>Status</label>
-
-      <p-toggleswitch formControlName="Status" />
-
-      <span class="status-label">{{
-        categoryform.get('Status')?.value ? 'Active' : 'Inactive'
-      }}</span>
-
-      <!-- <p-selectButton
-        [options]="statusOptions"
-        formControlName="Status"
-        optionLabel="label"
-        optionValue="value"
-      ></p-selectButton> -->
+    <div fxLayout="row" style="margin-top: 10px">
+      <div fxFlex="13">Status</div>
+      <div fxFlex="15">
+        <p-toggleswitch formControlName="Status" />
+      </div>
+      <div fxFlex="20" style="font-weight: 700">
+        {{ categoryForm.get('Status')?.value ? 'Active' : 'Inactive' }}
+      </div>
     </div>
   </form>
 
-  <div class="form-actions">
-    <p-button
-      label="Cancel"
-      severity="secondary"
-      [outlined]="true"
-      (onClick)="onCancel()"
-    ></p-button>
-    <p-button
-      label="{{ isEditMode ? 'Update' : 'Save' }}"
-      severity="primary"
-      [outlined]="true"
-      (onClick)="onSave()"
-    ></p-button>
-  </div>
-</div>
+  <ng-template #footer>
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+      <p-button
+        label="Cancel"
+        severity="secondary"
+        class="w-full"
+        [outlined]="true"
+        styleClass="w-full"
+        (onClick)="onCancel()"
+      />
+      <p-button
+        label="{{ isEditMode ? 'Update' : 'Save' }}"
+        class="w-full"
+        styleClass="w-full"
+        (onClick)="onSave()"
+      />
+    </div>
+  </ng-template>
+</p-card>

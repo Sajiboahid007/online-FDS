@@ -1,54 +1,50 @@
-<mat-card>
-  <mat-card-header class="card-header">
-    <div class="header-content">
-      <div>
-        <mat-card-title>Categories List</mat-card-title>
-        <mat-card-subtitle>Total Categories {{ category.length }}</mat-card-subtitle>
-      </div>
-      <p-button severity="primary" type="button" (click)="AddCategory()">
-        <i class="pi pi-plus"></i>
-        Add
-      </p-button>
+<p-card header="Categories">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxFlex="15">
+      <h6>Total Categories {{ category.length }}</h6>
     </div>
-  </mat-card-header>
+    <div fxFlex="10" fxLayoutAlign="end center">
+      <p-button severity="primary" type="button" (click)="AddCategory()"> Add </p-button>
+    </div>
+  </div>
 
-  <mat-card-content>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
-      <ng-container matColumnDef="Name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let category">{{ category.Name }}</td>
-      </ng-container>
+  <p-divider />
 
-      <ng-container matColumnDef="Status">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
-        <td mat-cell *matCellDef="let category">{{ category.Status ? 'Active' : 'Inactive' }}</td>
-      </ng-container>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+    <ng-container matColumnDef="Name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let category">{{ category.Name }}</td>
+    </ng-container>
 
-      <ng-container matColumnDef="Action">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let category">
-          <button
-            mat-icon-button
-            color="primary"
-            type="button"
-            aria-label="Edit"
-            (click)="onEditCategory(category.Id)"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" type="button" aria-label="Delete">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="Status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let category">{{ category.Status ? 'Active' : 'Inactive' }}</td>
+    </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-    <mat-paginator
-      [pageSizeOptions]="[5, 10, 20, 50]"
-      [pageSize]="5"
-      showFirstLastButtons
-    ></mat-paginator>
-  </mat-card-content>
-</mat-card>
+    <ng-container matColumnDef="Action">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let category">
+        <button
+          mat-icon-button
+          color="primary"
+          type="button"
+          aria-label="Edit"
+          (click)="onEditCategory(category.Id)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" type="button" aria-label="Delete">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20, 50]"
+    [pageSize]="5"
+    showFirstLastButtons
+  ></mat-paginator>
+</p-card>

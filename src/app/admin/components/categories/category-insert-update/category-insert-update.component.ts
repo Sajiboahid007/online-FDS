@@ -14,10 +14,9 @@ import { CategoriesService } from '../../../services/categories-service';
   styleUrl: './category-insert-update.component.scss',
 })
 export class CategoryInsertUpdateComponent implements OnInit {
-  isEditMode = true;
-  isLoading = false;
+  isEditMode = false;
 
-  categoryform!: FormGroup;
+  categoryForm!: FormGroup;
 
   category: Category[] = [];
   dataSource = new MatTableDataSource<Category>([]);
@@ -29,14 +28,14 @@ export class CategoryInsertUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.categoryform = new FormGroup({
+    this.categoryForm = new FormGroup({
       Name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       Status: new FormControl(false),
     });
 
     if (this.data) {
       this.isEditMode = true;
-      this.categoryform.patchValue(this.data);
+      this.categoryForm.patchValue(this.data);
     }
   }
 
@@ -45,11 +44,9 @@ export class CategoryInsertUpdateComponent implements OnInit {
   }
 
   onSave(): void {
-    this.categoriesService.addCategory(this.categoryform.getRawValue()).subscribe({
+    this.categoriesService.addCategory(this.categoryForm.getRawValue()).subscribe({
       next: (res: AppQuery<Category>) => {
-        console.log(res);
         this.dialogRef.close(true);
-        ``;
       },
       error: (error: any) => {
         console.error('Error adding category:', error);
