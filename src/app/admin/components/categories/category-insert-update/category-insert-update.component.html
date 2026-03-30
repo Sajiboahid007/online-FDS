@@ -1,4 +1,4 @@
-<p-card header="{{ isEditMode ? 'Add Category' : 'Edit Category' }}">
+<p-card header="{{ !isEditMode ? 'Add Category' : 'Edit Category' }}">
   <form [formGroup]="categoryForm">
     <div>
       <p-floatlabel variant="on">

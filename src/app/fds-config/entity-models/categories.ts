@@ -1,9 +1,11 @@
 export interface Category {
-  id: number;
-  name: string;
-  status?: boolean;
-  createdBy?: string;
-  createdDate?: string;
-  updatedBy?: string;
-  updatedDate?: string;
+  Id: number;
+  Name: string;
+  Status?: boolean;
+  CreatedBy?: string;
+  CreatedDate?: Date;
+  UpdatedBy?: string;
+  UpdatedDate?: Date;
+  IsMarkToDelete?: boolean;
+  ImageUrl?: string;
 }

@@ -15,6 +15,7 @@ import { CategoriesService } from '../../../services/categories-service';
 })
 export class CategoryInsertUpdateComponent implements OnInit {
   isEditMode = false;
+  categoryId!: number;
 
   categoryForm!: FormGroup;
 
@@ -35,6 +36,7 @@ export class CategoryInsertUpdateComponent implements OnInit {
 
     if (this.data) {
       this.isEditMode = true;
+      this.categoryId = this.data.Id;
       this.categoryForm.patchValue(this.data);
     }
   }
@@ -44,13 +46,30 @@ export class CategoryInsertUpdateComponent implements OnInit {
   }
 
   onSave(): void {
-    this.categoriesService.addCategory(this.categoryForm.getRawValue()).subscribe({
-      next: (res: AppQuery<Category>) => {
-        this.dialogRef.close(true);
-      },
-      error: (error: any) => {
-        console.error('Error adding category:', error);
-      },
-    });
+    if (this.isEditMode) {
+      // need to update
+      const payload: Category = {
+        Id: this.categoryId,
+        Name: this.categoryForm.get('Name')?.value,
+        Status: this.categoryForm.get('Status')?.value,
+      };
+      this.categoriesService.upodate(payload).subscribe({
+        next: (res: AppQuery<Category>) => {
+          this.dialogRef.close(true);
+        },
+        error: (error: any) => {
+          console.error('Error updating category:', error);
+        },
+      });
+    } else {
+      this.categoriesService.addCategory(this.categoryForm.getRawValue()).subscribe({
+        next: (res: AppQuery<Category>) => {
+          this.dialogRef.close(true);
+        },
+        error: (error: any) => {
+          console.error('Error adding category:', error);
+        },
+      });
+    }
   }
 }
