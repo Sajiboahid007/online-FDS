@@ -41,43 +41,38 @@ function getRefreshToken(
   loginService: LoginService,
   localStorageService: LocalStorageService,
 ): Observable<string> {
-  try {
-    if (tokenRequestInProgress) {
-      return tokenRequestInProgress;
-    }
-
-    const refreshToken: any = localStorageService.getItem(FDSConstant.RefreshTokenKey);
-
-    if (!refreshToken) {
-      return throwError(() => new Error('No refresh token'));
-    }
-
-    tokenRequestInProgress = loginService.refreshToken(refreshToken).pipe(
-      map((response) => {
-        if (!response?.token || !response?.refreshToken) {
-          throw new Error('No access token found');
-        }
-
-        // saving to local storage
-        localStorageService.setItem(FDSConstant.JwtTokenKey, response.token);
-        localStorageService.setItem(FDSConstant.RefreshTokenKey, response.refreshToken);
-
-        return response.token;
-      }),
-      catchError((err) => {
-        console.error('Failed to fetch refresh token', err);
-        return throwError(() => err);
-      }),
-      finalize(() => {
-        tokenRequestInProgress = null;
-      }),
-      shareReplay(1),
-    );
-
+  if (tokenRequestInProgress) {
     return tokenRequestInProgress;
-  } catch (error) {
-    console.error(error);
   }
+
+  const refreshToken: any = localStorageService.getItem(FDSConstant.RefreshTokenKey);
+
+  if (!refreshToken) {
+    return throwError(() => new Error('No refresh token'));
+  }
+
+  tokenRequestInProgress = loginService.refreshToken(refreshToken).pipe(
+    map((response) => {
+      if (!response?.token || !response?.refreshToken) {
+        throw new Error('No access token found');
+      }
+
+      // saving to local storage
+      localStorageService.setItem(FDSConstant.JwtTokenKey, response.token);
+      localStorageService.setItem(FDSConstant.RefreshTokenKey, response.refreshToken);
+
+      return response.token;
+    }),
+    catchError((err) => {
+      console.error('Failed to fetch refresh token', err);
+      return throwError(() => err);
+    }),
+    finalize(() => {
+      tokenRequestInProgress = null;
+    }),
+    shareReplay(1),
+  );
+
   return tokenRequestInProgress;
 }
 
