@@ -42,16 +42,19 @@
         </th>
       </tr>
     </ng-template>
-    <ng-template #body let-product>
+    <ng-template #body let-category>
       <tr>
-        <td>{{ product.Name }}</td>
-        <td>{{ product.Status }}</td>
+        <td>{{ category.Name }}</td>
+        <td>
+          <p-badge *ngIf="category.Status" value="Active" severity="success" />
+          <p-badge *ngIf="!category.Status" value="Inactive" severity="danger" />
+        </td>
         <td>
           <button
             pButton
             icon="pi pi-pencil"
             class="p-button-rounded p-button-primary p-mr-2"
-            (click)="onEditCategory(product.Id)"
+            (click)="onEditCategory(category.Id)"
           ></button>
           <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
         </td>
