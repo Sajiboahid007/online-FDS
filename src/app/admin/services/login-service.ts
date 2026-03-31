@@ -8,7 +8,7 @@ import { FDSConstant } from '../../fds-config/constant/fds-constant';
   providedIn: 'root',
 })
 export class LoginService {
-  private baseUrl = FDSConstant.BaseUrl;
+  private readonly baseUrl = FDSConstant.BaseUrl;
 
   constructor(
     private readonly http: HttpClient,
@@ -26,5 +26,9 @@ export class LoginService {
 
   login(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/login`, data);
+  }
+
+  refreshToken(refreshToken: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}${FDSConstant.RefreshTokenUrl}${refreshToken}`);
   }
 }

@@ -26,13 +26,13 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.loginService.getLoginForm();
   }
 
-  public onLogin() {
+  public onLogin1() {
     this.localStorageService.setItem(FDSConstant.JwtTokenKey, '1234567890');
     this.localStorageService.setItem(FDSConstant.RefreshTokenKey, '1234567890');
     this.router.navigate(['dashboard']);
   }
 
-  public onLogin1(): void {
+  public onLogin(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       this.cdr.detectChanges();
