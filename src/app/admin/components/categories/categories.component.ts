@@ -21,6 +21,7 @@ import { CategoryInsertUpdateComponent } from './category-insert-update/category
 export class CategoriesComponent implements OnInit, OnDestroy {
   destroy$: Subject<void> = new Subject<void>();
   categories: Category[] = [];
+  meters: any[] = [];
 
   constructor(
     private readonly categoriesService: CategoriesService,
@@ -41,6 +42,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res: AppQuery<Category[]>) => {
           this.categories = res?.data ?? [];
+          this.manageMeter();
           this.cd.detectChanges();
         },
         error: (error) => {
@@ -84,6 +86,15 @@ export class CategoriesComponent implements OnInit, OnDestroy {
         console.error('Error fetching category:', error);
       },
     });
+  }
+
+  private manageMeter() {
+    const active = this.categories.filter((item) => item.Status).length;
+    const inActive = this.categories.filter((item) => !item.Status).length;
+    this.meters = [
+      { label: 'Active', value: active, color: 'green' },
+      { label: 'Inactive', value: inActive, color: 'red' },
+    ];
   }
 
   ngOnDestroy(): void {

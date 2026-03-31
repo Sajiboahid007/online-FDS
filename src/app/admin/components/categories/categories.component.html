@@ -1,7 +1,7 @@
 <p-card header="Categories">
   <div fxLayout="row" fxLayoutAlign="space-between center">
     <div fxFlex="15">
-      <h6>Total Categories {{ categories.length }}</h6>
+      <p-metergroup [value]="meters" [max]="categories.length" />
     </div>
     <div fxFlex="10" fxLayoutAlign="end center">
       <p-button severity="primary" type="button" (click)="AddCategory()"> Add </p-button>

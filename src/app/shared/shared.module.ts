@@ -16,11 +16,12 @@ import { DividerModule } from 'primeng/divider';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { MeterGroupModule } from 'primeng/metergroup';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
-const primeNgModules = [DividerModule, BadgeModule, TableModule];
+const primeNgModules = [DividerModule, BadgeModule, TableModule, MeterGroupModule];
 
 @NgModule({
   declarations: [],
