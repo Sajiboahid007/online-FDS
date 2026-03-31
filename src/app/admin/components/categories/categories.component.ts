@@ -1,13 +1,11 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  OnDestroy,
   OnInit,
-  ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import { Subject, takeUntil } from 'rxjs';
 import { Category } from '../../../fds-config/entity-models/categories';
 import { AppQuery } from '../../../shared/app-query';
@@ -20,18 +18,14 @@ import { CategoryInsertUpdateComponent } from './category-insert-update/category
   styleUrl: './categories.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CategoriesComponent implements OnInit, AfterViewInit {
+export class CategoriesComponent implements OnInit, OnDestroy {
   destroy$: Subject<void> = new Subject<void>();
-  category: Category[] = [];
-  dataSource = new MatTableDataSource<Category>([]);
-
-  displayedColumns = ['Name', 'Status', 'Action'];
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  categories: Category[] = [];
 
   constructor(
     private readonly categoriesService: CategoriesService,
     private readonly dialog: MatDialog,
+    private readonly cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -39,13 +33,15 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
   }
 
   getCategories(): void {
+    this.categories = [];
+
     this.categoriesService
       .getCategories()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: AppQuery<Category[]>) => {
-          this.category = res?.data ?? [];
-          this.dataSource.data = this.category;
+          this.categories = res?.data ?? [];
+          this.cd.detectChanges();
         },
         error: (error) => {
           console.error('Error fetching categories:', error);
@@ -90,7 +86,8 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
+  ngOnDestroy(): void {
+    this.destroy$.complete();
+    this.destroy$.next();
   }
 }
