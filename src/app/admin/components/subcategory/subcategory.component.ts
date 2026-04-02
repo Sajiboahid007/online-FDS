@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Subject, takeUntil } from 'rxjs';
+import { Category } from '../../../fds-config/entity-models/categories';
+import { CategoriesService } from '../../services/categories-service';
 import { Subcategory } from '../../services/subcategory';
 
 @Component({
@@ -11,18 +15,41 @@ import { Subcategory } from '../../services/subcategory';
 })
 export class SubcategoryComponent implements OnInit, OnDestroy {
   subcategory: Subcategory[] = [];
+  categories: Category[] = [];
   destroy$: Subject<void> = new Subject<void>();
+  dataSource = new MatTableDataSource<Category>([]);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  displayedColumns = ['CategoryName', 'SubCategoryName', 'Status', 'Action'];
 
   AddSubcategory() {
     // Logic to add a new subcategory
   }
 
-  constructor(private readonly subcategoryService: Subcategory) {}
+  onEditSubcategory(Id: number) {}
+
+  constructor(
+    private readonly subcategoryService: Subcategory,
+    private readonly categoryService: CategoriesService,
+  ) {}
   ngOnInit(): void {
     this.getSubcategories();
+    this.getCategories();
   }
-
-  ngOnDestroy(): void {}
+  getCategories() {
+    this.categoryService
+      .getCategories()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          this.categories = response.data;
+        },
+        error: (error) => {
+          console.error('Error fetching categories:', error);
+        },
+      });
+  }
 
   getSubcategories() {
     this.subcategoryService
@@ -36,5 +63,10 @@ export class SubcategoryComponent implements OnInit, OnDestroy {
           console.error('Error fetching subcategories:', error);
         },
       });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
