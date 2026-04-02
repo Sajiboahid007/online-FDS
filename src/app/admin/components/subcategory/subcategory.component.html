@@ -1,0 +1,10 @@
+<p-card header="Subcategories" class="mb-4">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxFlex="15">
+      <p-metergroup [max]="subcategory.length" />
+    </div>
+    <div fxFlex="10" fxLayoutAlign="end center">
+      <p-button severity="primary" type="button" (click)="AddSubcategory()"> Add </p-button>
+    </div>
+  </div>
+</p-card>

@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit {
     },
     {
       label: 'Subcategory List',
-      route: '/dashboard/sub-categories',
+      route: '/dashboard/subcategory',
       icon: '🍟',
       description: 'Manage Sub Categories',
     },
