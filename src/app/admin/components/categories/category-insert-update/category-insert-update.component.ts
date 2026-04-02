@@ -32,6 +32,7 @@ export class CategoryInsertUpdateComponent implements OnInit {
     this.categoryForm = new FormGroup({
       Name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       Status: new FormControl(false),
+      ImageUrl: new FormControl(''),
     });
 
     if (this.data) {
@@ -52,6 +53,7 @@ export class CategoryInsertUpdateComponent implements OnInit {
         Id: this.categoryId,
         Name: this.categoryForm.get('Name')?.value,
         Status: this.categoryForm.get('Status')?.value,
+        ImageUrl: this.categoryForm.get('ImageUrl')?.value,
       };
       this.categoriesService.upodate(payload).subscribe({
         next: (res: AppQuery<Category>) => {
@@ -70,6 +72,19 @@ export class CategoryInsertUpdateComponent implements OnInit {
           console.error('Error adding category:', error);
         },
       });
+    }
+  }
+
+  onUpload(event: any): void {
+    const file = event.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64String = reader.result as string;
+        this.categoryForm.get('ImageUrl')?.setValue(base64String);
+        console.log('Selected file:', this.categoryForm.getRawValue());
+      };
+      reader.readAsDataURL(file);
     }
   }
 }

@@ -31,6 +31,32 @@
         {{ categoryForm.get('Status')?.value ? 'Active' : 'Inactive' }}
       </div>
     </div>
+
+    <!-- <p-fileupload
+      accept="image/*"
+      maxFileSize="1000000"
+      mode="advanced"
+      (onSelect)="onUpload($event)"
+    >
+      <ng-template #empty>
+        <div>Drag and drop files to here to upload.</div>
+      </ng-template>
+    </p-fileupload> -->
+
+    <div>
+      <p-fileupload
+        accept="image/*"
+        mode="advanced"
+        [auto]="true"
+        [customUpload]="true"
+        (onSelect)="onUpload($event)"
+      >
+        <ng-template #empty>
+          <div></div>
+          <div>Drag and drop files to here to upload.</div>
+        </ng-template>
+      </p-fileupload>
+    </div>
   </form>
 
   <ng-template #footer>

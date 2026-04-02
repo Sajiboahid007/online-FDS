@@ -1,11 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Subject, takeUntil } from 'rxjs';
 import { Category } from '../../../fds-config/entity-models/categories';
 import { AppQuery } from '../../../shared/app-query';
@@ -16,12 +12,17 @@ import { CategoryInsertUpdateComponent } from './category-insert-update/category
   standalone: false,
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoriesComponent implements OnInit, OnDestroy {
   destroy$: Subject<void> = new Subject<void>();
   categories: Category[] = [];
   meters: any[] = [];
+
+  dataSource = new MatTableDataSource<Category>([]);
+
+  displayedColumns = ['Name', 'Status', 'Image', 'Action'];
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private readonly categoriesService: CategoriesService,
@@ -43,6 +44,9 @@ export class CategoriesComponent implements OnInit, OnDestroy {
         next: (res: AppQuery<Category[]>) => {
           this.categories = res?.data ?? [];
           this.manageMeter();
+          this.dataSource.data = this.categories;
+          this.dataSource.paginator = this.paginator;
+
           this.cd.detectChanges();
         },
         error: (error) => {

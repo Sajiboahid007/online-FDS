@@ -4,7 +4,7 @@ export class FDSConstant {
   public static readonly RefreshTokenKey = 'REFRESH_TOKEN' as const;
 
   // login and refresh token url
-  public static readonly RefreshTokenUrl = '/api/refreshToken/' as const;
+  public static readonly RefreshTokenUrl = '/api/getToken/' as const;
   public static readonly LoginUrl = '/api/login' as const;
 
   public static readonly AnonymousUrls: string[] = [this.RefreshTokenUrl, this.LoginUrl] as const;
