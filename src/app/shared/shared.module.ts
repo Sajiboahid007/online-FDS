@@ -21,8 +21,13 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 // import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-
-const primeNgModules = [DividerModule, BadgeModule, MeterGroupModule, FileUploadModule];
+const primeNgModules = [
+  DividerModule,
+  BadgeModule,
+  MeterGroupModule,
+  FileUploadModule,
+  ToggleSwitchModule,
+];
 
 @NgModule({
   declarations: [],
